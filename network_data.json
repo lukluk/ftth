@@ -678,6 +678,43 @@
       "color": "#800000"
     }
   ],
+  "landmarks": [
+    {
+      "id": "lm_1",
+      "symbol": "mosque",
+      "name": "Masjid",
+      "lat": -7.095944659753675,
+      "lng": 110.29411107301713
+    },
+    {
+      "id": "lm_2",
+      "symbol": "mosque",
+      "name": "Musola",
+      "lat": -7.098050032054104,
+      "lng": 110.29502838850023
+    },
+    {
+      "id": "lm_3",
+      "symbol": "house",
+      "name": "Perumahan West",
+      "lat": -7.098949669871986,
+      "lng": 110.29454559087755
+    },
+    {
+      "id": "lm_4",
+      "symbol": "house",
+      "name": "Perumahan RT7",
+      "lat": -7.097286137023102,
+      "lng": 110.29344856739046
+    },
+    {
+      "id": "lm_5",
+      "symbol": "school",
+      "name": "TPQ",
+      "lat": -7.096695248707711,
+      "lng": 110.29530733823778
+    }
+  ],
   "settings": {
     "oltPower": 7,
     "fiberAttenuation": 0.35,

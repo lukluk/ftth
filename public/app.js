@@ -75,6 +75,8 @@ function restoreLandmark(data) {
     if (activeTool === 'delete') { deleteLandmark(data.id); }
   });
 
+  marker.on('dragstart', () => commitState());
+
   marker.on('dragend', e => {
     const ll = e.target.getLatLng();
     lm.lat = ll.lat; lm.lng = ll.lng;
@@ -85,12 +87,14 @@ function restoreLandmark(data) {
 }
 
 function addLandmark({ lat, lng, symbol, name }) {
+  commitState();
   const id = `lm_${++landmarkCounter}`;
   restoreLandmark({ id, lat, lng, symbol, name });
   saveToServer();
 }
 
 function deleteLandmark(id) {
+  commitState();
   const idx = landmarks.findIndex(l => l.id === id);
   if (idx === -1) return;
   landmarks[idx].marker.remove();
@@ -117,8 +121,10 @@ let undoStack = [];
 function commitState() {
   const state = {
     nodeCounter,
+    landmarkCounter,
     nodes: nodes.map(n => ({ id: n.id, type: n.type, name: n.name, lat: n.lat, lng: n.lng, splitRatio: n.splitRatio })),
-    edges: edges.map(e => ({ id: e.id, from: e.from, to: e.to, distance: e.distance, color: e.color }))
+    edges: edges.map(e => ({ id: e.id, from: e.from, to: e.to, distance: e.distance, color: e.color })),
+    landmarks: landmarks.map(l => ({ id: l.id, symbol: l.symbol, name: l.name, lat: l.lat, lng: l.lng }))
   };
   undoStack.push(JSON.stringify(state));
   if (undoStack.length > 50) undoStack.shift();
@@ -129,10 +135,13 @@ function undo() {
   const prevState = JSON.parse(undoStack.pop());
   nodes.forEach(n => n.marker.remove());
   edges.forEach(e => { e.polyline.remove(); e.labelMarker?.remove(); });
-  nodes = []; edges = [];
+  landmarks.forEach(lm => lm.marker.remove());
+  nodes = []; edges = []; landmarks = [];
   nodeCounter = prevState.nodeCounter || 0;
+  landmarkCounter = prevState.landmarkCounter || 0;
   prevState.nodes.forEach(nData => restoreNode(nData));
   prevState.edges.forEach(eData => restoreEdge(eData));
+  if (prevState.landmarks) prevState.landmarks.forEach(lData => restoreLandmark(lData));
   clearSelection();
   recalcAll();
   updateStats();
@@ -340,6 +349,7 @@ function addNode({ type, name, lat, lng, splitRatio = 8 }) {
   commitState();
   const id = `node_${++nodeCounter}`;
   restoreNode({ id, type, name, lat, lng, splitRatio });
+  recalcAll();
   updateStats();
   saveToServer();
   return nodes[nodes.length - 1];
@@ -363,12 +373,20 @@ function handleFiberClick(nodeId) {
   if (!fiberStart) {
     fiberStart = nodeId;
     const node = nodes.find(n => n.id === nodeId);
-    if (node) node.marker.setIcon(getMarkerIcon(node.type, node.splitRatio, true));
+    if (node) {
+      const status = node.dbResult && !node.dbResult.error ? node.dbResult.status : (node.type === 'ONU' ? 'lost' : null);
+      const rxPower = node.dbResult && !node.dbResult.error ? node.dbResult.rxPower : null;
+      node.marker.setIcon(getMarkerIcon(node.type, node.splitRatio, true, status, rxPower));
+    }
     setHint(`Source: ${node?.name}. Now click the destination node.`);
   } else {
     if (fiberStart === nodeId) {
       const node = nodes.find(n => n.id === nodeId);
-      if (node) node.marker.setIcon(getMarkerIcon(node.type, node.splitRatio));
+      if (node) {
+        const status = node.dbResult && !node.dbResult.error ? node.dbResult.status : (node.type === 'ONU' ? 'lost' : null);
+        const rxPower = node.dbResult && !node.dbResult.error ? node.dbResult.rxPower : null;
+        node.marker.setIcon(getMarkerIcon(node.type, node.splitRatio, false, status, rxPower));
+      }
       fiberStart = null;
       setHint('Click the source node to start a fiber connection.');
       generateNewCableColor();
@@ -376,7 +394,11 @@ function handleFiberClick(nodeId) {
     }
 
     const fromNode = nodes.find(n => n.id === fiberStart);
-    if (fromNode) fromNode.marker.setIcon(getMarkerIcon(fromNode.type, fromNode.splitRatio));
+    if (fromNode) {
+      const status = fromNode.dbResult && !fromNode.dbResult.error ? fromNode.dbResult.status : (fromNode.type === 'ONU' ? 'lost' : null);
+      const rxPower = fromNode.dbResult && !fromNode.dbResult.error ? fromNode.dbResult.rxPower : null;
+      fromNode.marker.setIcon(getMarkerIcon(fromNode.type, fromNode.splitRatio, false, status, rxPower));
+    }
 
     addEdge(fiberStart, nodeId);
 
@@ -755,7 +777,7 @@ function recalcAll() {
     const result = calcDbForNode(node.id);
     node.dbResult = result;
     if (result && !result.error) {
-      node.marker.setIcon(getMarkerIcon('ONU', null, false, result.status));
+      node.marker.setIcon(getMarkerIcon('ONU', null, false, result.status, result.rxPower));
     } else {
       node.marker.setIcon(getMarkerIcon('ONU', null, false, 'lost'));
     }
@@ -878,7 +900,7 @@ function haversine(lat1, lng1, lat2, lng2) {
 }
 
 // ─── MARKER ICONS (L.divIcon SVG) ─────────────────────────────────────────
-function getMarkerIcon(type, splitRatio, selected = false, status = null) {
+function getMarkerIcon(type, splitRatio, selected = false, status = null, rxPower = null) {
   const s = selected;
 
   // Splitter colors keyed by ratio — each ratio has a distinct hue
@@ -931,13 +953,24 @@ function getMarkerIcon(type, splitRatio, selected = false, status = null) {
   const ring = s ? `<circle cx="16" cy="16" r="14" fill="none" stroke="${c.fill}" stroke-width="1.5" opacity="0.5"/>` : '';
   const filterAttr = s ? 'filter="url(#glow)"' : '';
 
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" style="position:absolute;top:0;left:0;">
     <defs>${glowFilter}</defs>
     <g ${filterAttr}>${inner}</g>${ring}
   </svg>`;
 
+  let labelHtml = '';
+  if (type === 'ONU') {
+    if (rxPower !== null && typeof rxPower === 'number') {
+      labelHtml = `<div style="position:absolute;top:28px;left:50%;transform:translateX(-50%);color:${c.fill};font-family:'Share Tech Mono',monospace;font-size:10px;font-weight:700;white-space:nowrap;text-shadow:0 0 3px #fff,0 0 3px #fff;pointer-events:none;">${rxPower.toFixed(2)} dBm</div>`;
+    } else if (status === 'lost') {
+      labelHtml = `<div style="position:absolute;top:28px;left:50%;transform:translateX(-50%);color:#ff0000;font-family:'Share Tech Mono',monospace;font-size:10px;font-weight:700;white-space:nowrap;text-shadow:0 0 3px #fff,0 0 3px #fff;pointer-events:none;">LOSS</div>`;
+    }
+  }
+
+  const html = `<div style="position:relative; width:32px; height:32px;">${svg}${labelHtml}</div>`;
+
   return L.divIcon({
-    html: svg,
+    html: html,
     className: status === 'lost' ? 'blink-red' : '',
     iconSize: [32, 32],
     iconAnchor: [16, 16],
