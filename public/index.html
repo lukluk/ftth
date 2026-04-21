@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FTTH Fiber Optic Planner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Exo+2:wght@300;400;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- MAIN APP -->
+  <div id="app" class="app">
+
+    <!-- HEADER -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <span class="logo-icon">◈</span>
+        <span class="logo-text">FTTH PLANNER</span>
+        <span class="tagline">Fiber Optic Network Designer</span>
+      </div>
+      <div class="topbar-center">
+        <div class="toolbar">
+          <button class="tool-btn active" id="tool-select" data-tool="select" title="Select / Move (S)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 3l14 9-7 1-4 7z" />
+            </svg>
+            <span>Select</span>
+          </button>
+          <div class="tool-divider"></div>
+          <button class="tool-btn" id="tool-olt" data-tool="olt" title="Place OLT - Root Node (O)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="3" width="20" height="14" rx="2" />
+              <path d="M8 21h8M12 17v4" />
+            </svg>
+            <span>OLT</span>
+          </button>
+          <button class="tool-btn" id="tool-splitter" data-tool="splitter" title="Place Splitter (P)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="3" />
+              <path d="M12 2v4M12 18v4M2 12h4M18 12h4" />
+            </svg>
+            <span>Splitter</span>
+          </button>
+          <button class="tool-btn" id="tool-onu" data-tool="onu" title="Place ONU/ONT (U)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="5" y="2" width="14" height="20" rx="2" />
+              <circle cx="12" cy="17" r="1" />
+            </svg>
+            <span>ONU</span>
+          </button>
+          <button class="tool-btn" id="tool-pole" data-tool="pole" title="Place Utility Pole (L)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="4" x2="12" y2="22" />
+              <line x1="8" y1="4" x2="16" y2="4" />
+            </svg>
+            <span>Pole</span>
+          </button>
+          <div class="tool-divider"></div>
+          <button class="tool-btn" id="tool-fiber" data-tool="fiber" title="Draw Fiber Cable (F)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 12h18M3 6l9 6-9 6" />
+            </svg>
+            <span>Fiber</span>
+          </button>
+          <button class="tool-btn" id="tool-landmark" data-tool="landmark" title="Place Landmark Marker (M)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+              <circle cx="12" cy="9" r="2.5"/>
+            </svg>
+            <span>Landmark</span>
+          </button>
+          <div class="tool-divider"></div>
+          <button class="tool-btn" id="tool-undo" onclick="undo()" title="Undo (Ctrl+Z)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 7v6h6M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13" />
+            </svg>
+            <span>Undo</span>
+          </button>
+          <button class="tool-btn danger" id="tool-delete" data-tool="delete" title="Delete Element (Del)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="3 6 5 6 21 6" />
+              <path d="M19 6l-1 14H6L5 6M10 11v6M14 11v6" />
+            </svg>
+            <span>Delete</span>
+          </button>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <button id="btn-theme" class="btn-secondary" onclick="toggleTheme()" title="Toggle Light/Dark Mode" style="font-size: 14px; padding: 6px 10px; margin-right: 8px;">🌙</button>
+        <button id="btn-simulate" class="btn-primary" style="margin-right: 4px;" onclick="toggleSimulation()">▶ Simulate</button>
+        <button class="btn-secondary" onclick="saveNetwork()">💾 Save</button>
+        <button class="btn-secondary" onclick="resetNetwork()">↺ Reset</button>
+        <button class="btn-secondary" onclick="recalcAll()">⚡ Recalc All</button>
+      </div>
+    </header>
+
+    <!-- BODY -->
+    <div class="body-layout">
+
+      <!-- LEFT PANEL -->
+      <aside class="left-panel">
+        <div class="panel-section">
+          <div class="section-title">NETWORK SUMMARY</div>
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-val" id="stat-olt">0</div>
+              <div class="stat-label">OLT</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-val" id="stat-splitters">0</div>
+              <div class="stat-label">Splitters</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-val" id="stat-onus">0</div>
+              <div class="stat-label">ONU/ONT</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-val" id="stat-km">0.0</div>
+              <div class="stat-label">km Fiber</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-section">
+          <div class="section-title">OLT SETTINGS</div>
+          <div class="form-field">
+            <label>TX Power (dBm)</label>
+            <input type="number" id="set-oltPower" value="7" step="0.5" min="-10" max="20"
+              onchange="updateSettings()" />
+          </div>
+          <div class="form-field">
+            <label>Fiber Loss (dB/km)</label>
+            <select id="set-attenuation" onchange="updateSettings()">
+              <option value="0.35">0.35 — SM 1310nm</option>
+              <option value="0.20">0.20 — SM 1550nm</option>
+              <option value="0.40">0.40 — G.652.D</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label>Connector Loss (dB)</label>
+            <input type="number" id="set-connectorLoss" value="0.5" step="0.1" min="0" max="2"
+              onchange="updateSettings()" />
+          </div>
+          <div class="form-field">
+            <label>Min RX Power (dBm)</label>
+            <input type="number" id="set-minRxPower" value="-27" step="1" min="-40" max="0"
+              onchange="updateSettings()" />
+          </div>
+        </div>
+
+        <div class="panel-section">
+          <div class="section-title">SPLITTER LOSS TABLE</div>
+          <table class="loss-table">
+            <thead>
+              <tr>
+                <th>Ratio</th>
+                <th>IL (dB)</th>
+                <th>Budget</th>
+              </tr>
+            </thead>
+            <tbody id="splitter-table-body"></tbody>
+          </table>
+        </div>
+
+        <div class="panel-section">
+          <div class="section-title">ONU STATUS</div>
+          <div id="onu-list" class="onu-list"></div>
+        </div>
+      </aside>
+
+      <!-- MAP -->
+      <main class="map-container">
+        <div id="map"></div>
+        <div class="map-hint" id="map-hint">Select a tool from the toolbar to start building your network</div>
+      </main>
+
+      <!-- RIGHT PANEL -->
+      <aside class="right-panel">
+        <div class="panel-section">
+          <div class="section-title">SELECTED ELEMENT</div>
+          <div id="selected-panel">
+            <div class="empty-state">
+              <div class="empty-icon">◎</div>
+              <div>Click an element on the map to view its properties</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-section" id="db-panel" style="display:none">
+          <div class="section-title">dB BUDGET ANALYSIS</div>
+          <div id="db-results"></div>
+        </div>
+
+        <div class="panel-section">
+          <div class="section-title">HOW TO USE</div>
+          <div class="help-list">
+            <div class="help-item"><span class="help-key">OLT</span> Place once — this is your root node</div>
+            <div class="help-item"><span class="help-key">Splitter</span> Add 1:N optical splitter</div>
+            <div class="help-item"><span class="help-key">ONU</span> Place at each customer endpoint</div>
+            <div class="help-item"><span class="help-key">Fiber</span> Click two nodes to connect them</div>
+            <div class="help-item"><span class="help-key">Select</span> Click to inspect + see dB path</div>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- SPLITTER CONFIG DIALOG -->
+  <div id="splitterDialog" class="modal-overlay hidden">
+    <div class="modal-box compact">
+      <h2>Configure Splitter</h2>
+      <p>Select split ratio for this optical splitter:</p>
+      <div class="ratio-grid">
+        <button class="ratio-btn" onclick="confirmSplitter(2)">1:2<br /><small>3.7 dB</small></button>
+        <button class="ratio-btn" onclick="confirmSplitter(4)">1:4<br /><small>7.2 dB</small></button>
+        <button class="ratio-btn" onclick="confirmSplitter(8)">1:8<br /><small>10.5 dB</small></button>
+        <button class="ratio-btn" onclick="confirmSplitter(16)">1:16<br /><small>13.8 dB</small></button>
+        <button class="ratio-btn" onclick="confirmSplitter(32)">1:32<br /><small>17.1 dB</small></button>
+        <button class="ratio-btn" onclick="confirmSplitter(64)">1:64<br /><small>20.4 dB</small></button>
+      </div>
+      <button class="btn-secondary" onclick="closeSplitterDialog()">Cancel</button>
+    </div>
+  </div>
+
+  <!-- LANDMARK MARKER DIALOG -->
+  <div id="landmarkDialog" class="modal-overlay hidden">
+    <div class="modal-box compact">
+      <h2>Place Landmark</h2>
+      <p>Choose a symbol and enter a name:</p>
+
+      <div class="landmark-symbol-grid" id="landmark-symbol-grid">
+        <button class="lm-sym-btn active" data-sym="house"     onclick="selectLandmarkSymbol(this)">🏠<br><small>House</small></button>
+        <button class="lm-sym-btn"        data-sym="mosque"    onclick="selectLandmarkSymbol(this)">🕌<br><small>Mosque</small></button>
+        <button class="lm-sym-btn"        data-sym="church"    onclick="selectLandmarkSymbol(this)">⛪<br><small>Church</small></button>
+        <button class="lm-sym-btn"        data-sym="school"    onclick="selectLandmarkSymbol(this)">🏫<br><small>School</small></button>
+        <button class="lm-sym-btn"        data-sym="hospital"  onclick="selectLandmarkSymbol(this)">🏥<br><small>Hospital</small></button>
+        <button class="lm-sym-btn"        data-sym="shop"      onclick="selectLandmarkSymbol(this)">🏪<br><small>Shop</small></button>
+        <button class="lm-sym-btn"        data-sym="office"    onclick="selectLandmarkSymbol(this)">🏢<br><small>Office</small></button>
+        <button class="lm-sym-btn"        data-sym="factory"   onclick="selectLandmarkSymbol(this)">🏭<br><small>Factory</small></button>
+        <button class="lm-sym-btn"        data-sym="hotel"     onclick="selectLandmarkSymbol(this)">🏨<br><small>Hotel</small></button>
+        <button class="lm-sym-btn"        data-sym="park"      onclick="selectLandmarkSymbol(this)">🌳<br><small>Park</small></button>
+        <button class="lm-sym-btn"        data-sym="tower"     onclick="selectLandmarkSymbol(this)">📡<br><small>Tower</small></button>
+        <button class="lm-sym-btn"        data-sym="pin"       onclick="selectLandmarkSymbol(this)">📍<br><small>Point</small></button>
+      </div>
+
+      <div class="form-field" style="margin-top:14px">
+        <label>Name / Label</label>
+        <input type="text" id="landmark-name-input" placeholder="e.g. My House, Al-Falah Mosque..." />
+      </div>
+
+      <div style="display:flex;gap:8px;margin-top:12px">
+        <button class="btn-secondary" style="flex:1" onclick="closeLandmarkDialog()">Cancel</button>
+        <button class="btn-primary"   style="flex:2" onclick="confirmLandmark()">📍 Place Marker</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>

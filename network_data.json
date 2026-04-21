@@ -1,0 +1,688 @@
+{
+  "nodes": [
+    {
+      "id": "node_1",
+      "type": "OLT",
+      "name": "OLT-01",
+      "lat": -7.097267505421142,
+      "lng": 110.29530733823778,
+      "splitRatio": 8
+    },
+    {
+      "id": "node_2",
+      "type": "SPLITTER",
+      "name": "SP-01",
+      "lat": -7.097259520448633,
+      "lng": 110.295527279377,
+      "splitRatio": 4
+    },
+    {
+      "id": "node_3",
+      "type": "SPLITTER",
+      "name": "SP-02",
+      "lat": -7.098042047095182,
+      "lng": 110.29584646224977,
+      "splitRatio": 8
+    },
+    {
+      "id": "node_6",
+      "type": "SPLITTER",
+      "name": "SP-05",
+      "lat": -7.098797955925422,
+      "lng": 110.29434710741045,
+      "splitRatio": 4
+    },
+    {
+      "id": "node_7",
+      "type": "SPLITTER",
+      "name": "SP-06",
+      "lat": -7.097171685741979,
+      "lng": 110.2936014533043,
+      "splitRatio": 4
+    },
+    {
+      "id": "node_8",
+      "type": "SPLITTER",
+      "name": "SP-07",
+      "lat": -7.096860271646919,
+      "lng": 110.29423445463182,
+      "splitRatio": 8
+    },
+    {
+      "id": "node_9",
+      "type": "SPLITTER",
+      "name": "SP-08",
+      "lat": -7.096740496938859,
+      "lng": 110.29540926218034,
+      "splitRatio": 4
+    },
+    {
+      "id": "node_10",
+      "type": "SPLITTER",
+      "name": "SP-09",
+      "lat": -7.096655323794164,
+      "lng": 110.29588401317598,
+      "splitRatio": 8
+    },
+    {
+      "id": "node_11",
+      "type": "SPLITTER",
+      "name": "SP-10",
+      "lat": -7.096479654133447,
+      "lng": 110.29622465372087,
+      "splitRatio": 8
+    },
+    {
+      "id": "node_12",
+      "type": "SPLITTER",
+      "name": "SP-11",
+      "lat": -7.096008539712313,
+      "lng": 110.29524296522142,
+      "splitRatio": 8
+    },
+    {
+      "id": "node_13",
+      "type": "SPLITTER",
+      "name": "SP-12",
+      "lat": -7.0973327160247015,
+      "lng": 110.29555007815361,
+      "splitRatio": 8
+    },
+    {
+      "id": "node_14",
+      "type": "POLE",
+      "name": "POLE-01",
+      "lat": -7.096748481920375,
+      "lng": 110.29533952474596,
+      "splitRatio": 8
+    },
+    {
+      "id": "node_15",
+      "type": "POLE",
+      "name": "POLE-02",
+      "lat": -7.097102482627947,
+      "lng": 110.29362022876741,
+      "splitRatio": 8
+    },
+    {
+      "id": "node_16",
+      "type": "POLE",
+      "name": "POLE-03",
+      "lat": -7.096932136456798,
+      "lng": 110.29418349266054,
+      "splitRatio": 8
+    },
+    {
+      "id": "node_17",
+      "type": "SPLITTER",
+      "name": "SP-13",
+      "lat": -7.09730743028156,
+      "lng": 110.2956184744835,
+      "splitRatio": 4
+    },
+    {
+      "id": "node_19",
+      "type": "SPLITTER",
+      "name": "SP-12",
+      "lat": -7.097924934348395,
+      "lng": 110.29500156641008,
+      "splitRatio": 8
+    },
+    {
+      "id": "node_20",
+      "type": "SPLITTER",
+      "name": "SP-13",
+      "lat": -7.098153836507474,
+      "lng": 110.2945563197136,
+      "splitRatio": 8
+    },
+    {
+      "id": "node_21",
+      "type": "POLE",
+      "name": "POLE-04",
+      "lat": -7.097789189990969,
+      "lng": 110.29568016529085,
+      "splitRatio": 8
+    },
+    {
+      "id": "node_22",
+      "type": "ONU",
+      "name": "ONU-01",
+      "lat": -7.0959899080586375,
+      "lng": 110.29666721820831,
+      "splitRatio": 8
+    },
+    {
+      "id": "node_24",
+      "type": "SPLITTER",
+      "name": "SP-14",
+      "lat": -7.095768989821708,
+      "lng": 110.29639631509782,
+      "splitRatio": 8
+    },
+    {
+      "id": "node_25",
+      "type": "SPLITTER",
+      "name": "SP-15",
+      "lat": -7.0952206862695135,
+      "lng": 110.29497206211092,
+      "splitRatio": 4
+    },
+    {
+      "id": "node_26",
+      "type": "SPLITTER",
+      "name": "SP-16",
+      "lat": -7.095367078058526,
+      "lng": 110.29441952705383,
+      "splitRatio": 8
+    },
+    {
+      "id": "node_27",
+      "type": "SPLITTER",
+      "name": "SP-17",
+      "lat": -7.094978474298188,
+      "lng": 110.29585719108583,
+      "splitRatio": 8
+    },
+    {
+      "id": "node_29",
+      "type": "ONU",
+      "name": "ONU-03",
+      "lat": -7.095606628158311,
+      "lng": 110.29452145099641,
+      "splitRatio": 8
+    },
+    {
+      "id": "node_30",
+      "type": "SPLITTER",
+      "name": "SP-18",
+      "lat": -7.095130189503933,
+      "lng": 110.29412448406221,
+      "splitRatio": 4
+    },
+    {
+      "id": "node_31",
+      "type": "ONU",
+      "name": "ONU-04",
+      "lat": -7.0950796177742355,
+      "lng": 110.29436856508256,
+      "splitRatio": 8
+    },
+    {
+      "id": "node_32",
+      "type": "SPLITTER",
+      "name": "SP-19",
+      "lat": -7.095045016061258,
+      "lng": 110.29478162527087,
+      "splitRatio": 4
+    },
+    {
+      "id": "node_34",
+      "type": "ONU",
+      "name": "ONU-05",
+      "lat": -7.094605840247276,
+      "lng": 110.29469043016435,
+      "splitRatio": 8
+    },
+    {
+      "id": "node_35",
+      "type": "ONU",
+      "name": "ONU-06",
+      "lat": -7.096660647116168,
+      "lng": 110.29425859451295,
+      "splitRatio": 8
+    },
+    {
+      "id": "node_36",
+      "type": "SPLITTER",
+      "name": "SP-20",
+      "lat": -7.097938242616584,
+      "lng": 110.2939260005951,
+      "splitRatio": 8
+    },
+    {
+      "id": "node_37",
+      "type": "ONU",
+      "name": "ONU-07",
+      "lat": -7.0981511748551105,
+      "lng": 110.29395014047624,
+      "splitRatio": 8
+    },
+    {
+      "id": "node_38",
+      "type": "SPLITTER",
+      "name": "SP-21",
+      "lat": -7.098885790321628,
+      "lng": 110.29440611600879,
+      "splitRatio": 8
+    },
+    {
+      "id": "node_39",
+      "type": "ONU",
+      "name": "ONU-08",
+      "lat": -7.09856373078686,
+      "lng": 110.2946448326111,
+      "splitRatio": 8
+    },
+    {
+      "id": "node_41",
+      "type": "ONU",
+      "name": "ONU-10",
+      "lat": -7.098515821084741,
+      "lng": 110.29454022645952,
+      "splitRatio": 8
+    },
+    {
+      "id": "node_42",
+      "type": "ONU",
+      "name": "ONU-11",
+      "lat": -7.098467911377624,
+      "lng": 110.29463142156602,
+      "splitRatio": 8
+    },
+    {
+      "id": "node_43",
+      "type": "ONU",
+      "name": "ONU-11",
+      "lat": -7.098047370401143,
+      "lng": 110.29447048902513,
+      "splitRatio": 8
+    },
+    {
+      "id": "node_44",
+      "type": "ONU",
+      "name": "ONU-12",
+      "lat": -7.098310873969355,
+      "lng": 110.29458314180377,
+      "splitRatio": 8
+    },
+    {
+      "id": "node_45",
+      "type": "ONU",
+      "name": "ONU-13",
+      "lat": -7.0978663779638245,
+      "lng": 110.29455363750459,
+      "splitRatio": 8
+    },
+    {
+      "id": "node_46",
+      "type": "ONU",
+      "name": "ONU-14",
+      "lat": -7.097837099768746,
+      "lng": 110.29437392950061,
+      "splitRatio": 8
+    },
+    {
+      "id": "node_47",
+      "type": "ONU",
+      "name": "ONU-15",
+      "lat": -7.098159159812149,
+      "lng": 110.2958518266678,
+      "splitRatio": 8
+    },
+    {
+      "id": "node_48",
+      "type": "ONU",
+      "name": "ONU-16",
+      "lat": -7.098020753870705,
+      "lng": 110.29560238122943,
+      "splitRatio": 8
+    },
+    {
+      "id": "node_49",
+      "type": "ONU",
+      "name": "ONU-17",
+      "lat": -7.098116573373067,
+      "lng": 110.29540926218034,
+      "splitRatio": 8
+    },
+    {
+      "id": "node_50",
+      "type": "ONU",
+      "name": "ONU-18",
+      "lat": -7.098047370401143,
+      "lng": 110.29510885477067,
+      "splitRatio": 8
+    },
+    {
+      "id": "node_51",
+      "type": "ONU",
+      "name": "ONU-19",
+      "lat": -7.097898317810883,
+      "lng": 110.29543876647949,
+      "splitRatio": 8
+    },
+    {
+      "id": "node_52",
+      "type": "ONU",
+      "name": "ONU-20",
+      "lat": -7.098124558330678,
+      "lng": 110.29430955648424,
+      "splitRatio": 8
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge_1776737209351",
+      "from": "node_1",
+      "to": "node_2",
+      "distance": 0.024285186892101546,
+      "color": "#fa8072"
+    },
+    {
+      "id": "edge_1776737217671",
+      "from": "node_2",
+      "to": "node_9",
+      "distance": 0.05916373256821075,
+      "color": "#ff69b4"
+    },
+    {
+      "id": "edge_1776737396366",
+      "from": "node_9",
+      "to": "node_10",
+      "distance": 0.05323471770754495,
+      "color": "#d2691e"
+    },
+    {
+      "id": "edge_1776737398806",
+      "from": "node_9",
+      "to": "node_11",
+      "distance": 0.09453234233889356,
+      "color": "#ff69b4"
+    },
+    {
+      "id": "edge_1776737402038",
+      "from": "node_9",
+      "to": "node_12",
+      "distance": 0.08343280711897864,
+      "color": "#4682b4"
+    },
+    {
+      "id": "edge_1776737425286",
+      "from": "node_2",
+      "to": "node_14",
+      "distance": 0.06048371122872821,
+      "color": "#4363d8"
+    },
+    {
+      "id": "edge_1776737430686",
+      "from": "node_14",
+      "to": "node_15",
+      "distance": 0.19375295969110704,
+      "color": "#4363d8"
+    },
+    {
+      "id": "edge_1776737433910",
+      "from": "node_15",
+      "to": "node_6",
+      "distance": 0.20487993645731772,
+      "color": "#4363d8"
+    },
+    {
+      "id": "edge_1776737464382",
+      "from": "node_2",
+      "to": "node_14",
+      "distance": 0.06048371122872821,
+      "color": "#e6194b"
+    },
+    {
+      "id": "edge_1776737465510",
+      "from": "node_14",
+      "to": "node_16",
+      "distance": 0.12918441060624,
+      "color": "#e6194b"
+    },
+    {
+      "id": "edge_1776737466670",
+      "from": "node_16",
+      "to": "node_7",
+      "distance": 0.06952861925263196,
+      "color": "#e6194b"
+    },
+    {
+      "id": "edge_1776737486359",
+      "from": "node_2",
+      "to": "node_17",
+      "distance": 0.011385916162256298,
+      "color": "#46f0f0"
+    },
+    {
+      "id": "edge_1776737500887",
+      "from": "node_17",
+      "to": "node_3",
+      "distance": 0.08547170820293258,
+      "color": "#ff00ff"
+    },
+    {
+      "id": "edge_1776737522182",
+      "from": "node_17",
+      "to": "node_13",
+      "distance": 0.00805377738207202,
+      "color": "#f032e6"
+    },
+    {
+      "id": "edge_1776737848374",
+      "from": "node_17",
+      "to": "node_21",
+      "distance": 0.05400000146311827,
+      "color": "#ffc0cb"
+    },
+    {
+      "id": "edge_1776737849733",
+      "from": "node_21",
+      "to": "node_19",
+      "distance": 0.07638468630892171,
+      "color": "#ffc0cb"
+    },
+    {
+      "id": "edge_1776737857653",
+      "from": "node_17",
+      "to": "node_21",
+      "distance": 0.05400000146311827,
+      "color": "#808000"
+    },
+    {
+      "id": "edge_1776737858749",
+      "from": "node_21",
+      "to": "node_20",
+      "distance": 0.1304687194839398,
+      "color": "#808000"
+    },
+    {
+      "id": "edge_1776737884878",
+      "from": "node_11",
+      "to": "node_22",
+      "distance": 0.07314610126101947,
+      "color": "#ff6347"
+    },
+    {
+      "id": "edge_1776738308765",
+      "from": "node_1",
+      "to": "node_25",
+      "distance": 0.23058308317410087,
+      "color": "#6495ed"
+    },
+    {
+      "id": "edge_1776738313349",
+      "from": "node_25",
+      "to": "node_27",
+      "distance": 0.1013136086601981,
+      "color": "#ff1493"
+    },
+    {
+      "id": "edge_1776738315941",
+      "from": "node_25",
+      "to": "node_26",
+      "distance": 0.06310423317861194,
+      "color": "#1e90ff"
+    },
+    {
+      "id": "edge_1776738370509",
+      "from": "node_26",
+      "to": "node_29",
+      "distance": 0.02891372423871891,
+      "color": "#ff8c00"
+    },
+    {
+      "id": "edge_1776738425581",
+      "from": "node_26",
+      "to": "node_30",
+      "distance": 0.041877613742778985,
+      "color": "#cd5c5c"
+    },
+    {
+      "id": "edge_1776738429508",
+      "from": "node_30",
+      "to": "node_31",
+      "distance": 0.0275135297784544,
+      "color": "#2e8b57"
+    },
+    {
+      "id": "edge_1776738482357",
+      "from": "node_26",
+      "to": "node_32",
+      "distance": 0.0536552854543349,
+      "color": "#9acd32"
+    },
+    {
+      "id": "edge_1776738487900",
+      "from": "node_32",
+      "to": "node_34",
+      "distance": 0.04986011664873399,
+      "color": "#f032e6"
+    },
+    {
+      "id": "edge_1776738578884",
+      "from": "node_7",
+      "to": "node_8",
+      "distance": 0.07795970242285143,
+      "color": "#2e8b57"
+    },
+    {
+      "id": "edge_1776738590876",
+      "from": "node_8",
+      "to": "node_35",
+      "distance": 0.02235648389897556,
+      "color": "#ff1493"
+    },
+    {
+      "id": "edge_1776738609164",
+      "from": "node_7",
+      "to": "node_36",
+      "distance": 0.09245457381001057,
+      "color": "#00ffff"
+    },
+    {
+      "id": "edge_1776738617156",
+      "from": "node_36",
+      "to": "node_37",
+      "distance": 0.02382634446378819,
+      "color": "#911eb4"
+    },
+    {
+      "id": "edge_1776738655564",
+      "from": "node_6",
+      "to": "node_38",
+      "distance": 0.01173815971284767,
+      "color": "#9acd32"
+    },
+    {
+      "id": "edge_1776738665092",
+      "from": "node_38",
+      "to": "node_39",
+      "distance": 0.04445540396559193,
+      "color": "#d2691e"
+    },
+    {
+      "id": "edge_1776738726948",
+      "from": "node_38",
+      "to": "node_41",
+      "distance": 0.0437192910510175,
+      "color": "#ff69b4"
+    },
+    {
+      "id": "edge_1776738728900",
+      "from": "node_38",
+      "to": "node_42",
+      "distance": 0.05269867398895268,
+      "color": "#46f0f0"
+    },
+    {
+      "id": "edge_1776738765284",
+      "from": "node_20",
+      "to": "node_43",
+      "distance": 0.01516066558255496,
+      "color": "#191970"
+    },
+    {
+      "id": "edge_1776738766892",
+      "from": "node_20",
+      "to": "node_45",
+      "distance": 0.03196530184105595,
+      "color": "#00ffff"
+    },
+    {
+      "id": "edge_1776738769004",
+      "from": "node_20",
+      "to": "node_46",
+      "distance": 0.04056411933343722,
+      "color": "#00ffff"
+    },
+    {
+      "id": "edge_1776738790276",
+      "from": "node_3",
+      "to": "node_47",
+      "distance": 0.013035785861211185,
+      "color": "#ffc0cb"
+    },
+    {
+      "id": "edge_1776738791836",
+      "from": "node_3",
+      "to": "node_48",
+      "distance": 0.02703644515851891,
+      "color": "#ff6347"
+    },
+    {
+      "id": "edge_1776738793516",
+      "from": "node_3",
+      "to": "node_49",
+      "distance": 0.048948440034040246,
+      "color": "#8a2be2"
+    },
+    {
+      "id": "edge_1776738807492",
+      "from": "node_19",
+      "to": "node_50",
+      "distance": 0.01804156940777251,
+      "color": "#008080"
+    },
+    {
+      "id": "edge_1776738822180",
+      "from": "node_19",
+      "to": "node_51",
+      "distance": 0.04833257091040657,
+      "color": "#40e0d0"
+    },
+    {
+      "id": "edge_1776738855812",
+      "from": "node_20",
+      "to": "node_52",
+      "distance": 0.027422463434780768,
+      "color": "#000075"
+    },
+    {
+      "id": "edge_1776738871892",
+      "from": "node_20",
+      "to": "node_44",
+      "distance": 0.017710808568525905,
+      "color": "#800000"
+    }
+  ],
+  "settings": {
+    "oltPower": 7,
+    "fiberAttenuation": 0.35,
+    "connectorLoss": 0.5,
+    "spliceLoss": 0.1,
+    "minRxPower": -27
+  }
+}
